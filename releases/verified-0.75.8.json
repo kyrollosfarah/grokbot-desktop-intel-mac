@@ -1,0 +1,14 @@
+{
+  "product": "Grok Bot",
+  "version": "0.75.8",
+  "platform": "darwin-x64",
+  "verifiedOn": "2026-10-25",
+  "testedMacOS": "15.7.7",
+  "declaredMinimumMacOS": "12.0",
+  "bundleIdentifier": "com.anysphere.sand",
+  "teamIdentifier": "DCNK4UB866",
+  "releaseFeed": "https://api2.cursor.sh/updates/api/download/stable/darwin-x64/sand",
+  "downloadUrl": "https://downloads.cursor.com/grokbot/stable/darwin-x64/0.75.8/Grok_Bot_0.75.8_x64.dmg",
+  "sha256": "48175e9f6cd549227e83a5639ac661bd2a087901230d1f262a533f3d85aefb64",
+  "checksumSource": "Calculated locally from the official downloaded DMG"
+}
