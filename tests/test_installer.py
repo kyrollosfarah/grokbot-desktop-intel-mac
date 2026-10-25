@@ -162,6 +162,19 @@ class InstallerTests(unittest.TestCase):
         self.assertNotEqual(result.returncode, 0, result.stdout)
         self.assertTrue(self.app.is_symlink())
 
+    def test_version_comparison_rejects_expressions(self):
+        cases = [('15.7.7', '12.0', True), ('12', '12.0.0', True),
+                 ('12.08', '12.7', True), ('11.9', '12.0', False),
+                 ('15.7.7', '12.x', False), ('15.7.7', '12.0.1+1', False),
+                 ('15.7.7', '12.0.$(touch forbidden)', False)]
+        for actual, required, expected in cases:
+            with self.subTest(actual=actual, required=required):
+                result = subprocess.run(['/bin/bash', '-c',
+                    'source "$1"; version_at_least "$2" "$3"', 'test',
+                    str(REPO / 'lib/common.sh'), actual, required], cwd=self.root)
+                self.assertEqual(result.returncode == 0, expected)
+        self.assertFalse((self.root / 'forbidden').exists())
+
 
 if __name__ == '__main__':
     unittest.main(verbosity=2)

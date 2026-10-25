@@ -12,9 +12,14 @@ require_intel_mac() {
 
 version_at_least() {
   local actual="$1" required="$2" a b c x y z
+  # Reject expressions before Bash arithmetic evaluates values from Info.plist.
+  [[ "$actual" =~ ^[0-9]+(\.[0-9]+){0,2}$ ]] || return 1
+  [[ "$required" =~ ^[0-9]+(\.[0-9]+){0,2}$ ]] || return 1
   IFS=. read -r a b c <<< "$actual"
   IFS=. read -r x y z <<< "$required"
   a=${a:-0}; b=${b:-0}; c=${c:-0}; x=${x:-0}; y=${y:-0}; z=${z:-0}
+  a=$((10#$a)); b=$((10#$b)); c=$((10#$c))
+  x=$((10#$x)); y=$((10#$y)); z=$((10#$z))
   (( a > x || (a == x && b > y) || (a == x && b == y && c >= z) ))
 }
 
